@@ -1,8 +1,8 @@
-# Bellator Console 1.1.5 — Russian / English
+# Bellator Console 1.1.5 — RU / EN
 
-Russian and English localization for **Bellator Console 1.1.5** (`斗战者控制台`), including the **ApplyIcc** color-calibration utility.
+Unofficial Russian and English localization for Bellator Console 1.1.5 and the ApplyIcc color-calibration utility.
 
-[Download RU / EN](https://github.com/dan-oasis/bellator-console-localization/raw/refs/heads/main/dist/BellatorConsole_1.1.5_RU_EN.zip) · [Русская инструкция](README.ru.md) · [SHA-256](https://github.com/dan-oasis/bellator-console-localization/blob/main/dist/SHA256SUMS)
+[Download package](https://github.com/dan-oasis/bellator-console-localization/raw/refs/heads/main/dist/BellatorConsole_1.1.5_RU_EN.zip) · [Русский](README.ru.md) · [SHA-256](https://github.com/dan-oasis/bellator-console-localization/blob/main/dist/SHA256SUMS)
 
 ## Features
 
@@ -10,66 +10,27 @@ Russian and English localization for **Bellator Console 1.1.5** (`斗战者控�
 - Translated color-calibration interface and messages.
 - Russian or English selection during installation.
 - Language switching, original-file backups and restoration.
-- SHA-256 verification of payloads, installed files and backups.
-
-## Requirements
-
-Windows, PowerShell 5.1 or later, administrator privileges and the original Bellator Console 1.1.5 installation. The package contains localization files only; it does not include the original application installer or hardware drivers. Unknown application builds are rejected.
+- SHA-256 verification of application files and backups.
 
 ## Installation
 
-1. Extract the entire ZIP into a folder.
-2. Exit Bellator Console, including its tray icon, and close ApplyIcc.
-3. Right-click **Install.cmd → Run as administrator**.
-4. Choose **Русский** or **English**.
-5. Select the application folder containing `斗战者控制台.exe`.
-6. Start Bellator Console using its normal shortcut.
+Requires an installed Bellator Console 1.1.5, Windows, PowerShell 5.1 or later and administrator privileges.
 
-Run **Install.cmd** again to select another language. Original backups are required for language switching.
+1. Extract the ZIP and close Bellator Console, its tray icon and ApplyIcc.
+2. Right-click **Install.cmd → Run as administrator**.
+3. Choose **Русский** or **English**.
+4. Select the folder containing `斗战者控制台.exe`.
 
-## Restoration
+Run **Install.cmd** again to switch languages. Run **Restore.cmd** with both applications closed to restore the original files.
 
-Close both applications and run **Restore.cmd** as administrator. Both original files are restored. The language selection controls the installer messages.
+Original backups are stored beside their files with the `.before-russian` suffix. Keep them: language switching and restoration require these backups. Unknown application builds are not supported.
 
-| Target | Backup |
-| --- | --- |
-| `斗战者控制台.dll` | `斗战者控制台.dll.before-russian` |
-| `ApplyIcc/ApplyIcc.exe` | `ApplyIcc/ApplyIcc.exe.before-russian` |
+## Package contents
 
-Keep the backups. The `.before-russian` suffix is used for both languages. Backups and both target files are verified before replacement. If a replacement fails, the installer attempts to restore the state before that installation attempt.
+The localization replaces `斗战者控制台.dll` and `ApplyIcc/ApplyIcc.exe`. The original application installer and hardware drivers are not included. Manufacturer signatures are not retained on localized files. Some technical messages remain in their original language.
 
-## Scope
+Build and installer checks run on Windows and Linux. They do not validate hardware functions or interface layout on specific laptop models.
 
-The package replaces the two files listed above. The main EXE, drivers, services, ICC profiles and application settings are not replaced. Manufacturer signatures are not retained on localized files. Some technical diagnostics and OS control names remain in their original language.
+Dictionary: `locales/en.json`. Build scripts: `src/`. Tests: `tests/`. Report: `docs/build-report.json`.
 
-Automated checks cover binary structure, string references, **472 method bodies**, installation, language switching and restoration. Checks run on Windows and Linux. These tests do not validate GPU switching, fan behavior, color-calibration results or display layout on specific laptop models.
-
-## Build and test
-
-Python 3.10+; no third-party Python packages are required. Run from the repository root:
-
-```sh
-python src/build_english.py
-python src/package.py
-python -m unittest discover -s tests -p 'test_*.py' -v
-```
-
-Windows installer tests:
-
-```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File tests\test-installer.ps1
-```
-
-The installer tests use temporary dummy files and do not launch the application. The translation dictionary is `locales/en.json`; binary verification results are in `docs/build-report.json`.
-
-Command-line installation:
-
-```powershell
-powershell.exe -NoProfile -STA -ExecutionPolicy Bypass -File .\Install.ps1 -Action Install -Language en -Folder 'C:\Path\To\Bellator Console'
-```
-
-Use `-Language ru` for Russian or `-Action Restore` to restore the original files. The CMD launchers do not change the machine-wide PowerShell execution policy.
-
-## Ownership
-
-Unofficial localization. The underlying application and third-party components belong to their respective owners.
+The application and third-party components belong to their respective owners.
