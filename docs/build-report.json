@@ -1,0 +1,18 @@
+{
+  "\u6597\u6218\u8005\u63a7\u5236\u53f0.dll": {
+    "baml_values_changed": 67,
+    "string_references_changed": 54,
+    "methods_verified": 429,
+    "source_sha256": "8262619c2b5150b31ec1c1e72b5d30bc9ffa187c4a842088dbc09485e44d0cc7",
+    "english_sha256": "b49e1d5cbbaed683f48f53cdde245fcfab9f3f70d625be971a0916c48a1aa9b7",
+    "runtime_tested": false
+  },
+  "ApplyIcc/ApplyIcc.exe": {
+    "baml_values_changed": 4,
+    "string_references_changed": 172,
+    "methods_verified": 43,
+    "source_sha256": "135095ecfe92531a0fd282cd52cd9bce2682c49485f54a78bbe1cfc2bf565dd8",
+    "english_sha256": "08d37ea7774cacc1dc741da61d2b63cdfaf78ea5901fe3bce0cf29bed881d29f",
+    "runtime_tested": false
+  }
+}

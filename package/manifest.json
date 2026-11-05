@@ -1,0 +1,24 @@
+{
+  "version": "1.1.5-localization.6",
+  "files": [
+    {
+      "relative": "斗战者控制台.dll",
+      "original": "d9c1ebcb43315d46319c24b7c11fc0facad54d4d4737305dce72f53d6b6a43a2",
+      "previous": [
+        "eb3d846296d96d701d162d1d5bacffc062023b1e17f41135086f9e050a5cfdd5",
+        "f7d6d391700891a6dcf17fbbe85f40b19fff114da404d883e5d0981fa34b86fb",
+        "eca13a8430aa4e05c27a98f5ba9f8d866e377c91f57adb0bb94a012879639e39",
+        "bbd616d8364ea718dcde53e07b1106e111a72375276d7669e92e248ca7ba6191"
+      ],
+      "ru": "8262619c2b5150b31ec1c1e72b5d30bc9ffa187c4a842088dbc09485e44d0cc7",
+      "en": "b49e1d5cbbaed683f48f53cdde245fcfab9f3f70d625be971a0916c48a1aa9b7"
+    },
+    {
+      "relative": "ApplyIcc/ApplyIcc.exe",
+      "original": "a9ca6c36c36e92c7467b8cffb5c155e68895fa1983d77fd52e5d3a24fe52d7d5",
+      "previous": [],
+      "ru": "135095ecfe92531a0fd282cd52cd9bce2682c49485f54a78bbe1cfc2bf565dd8",
+      "en": "08d37ea7774cacc1dc741da61d2b63cdfaf78ea5901fe3bce0cf29bed881d29f"
+    }
+  ]
+}

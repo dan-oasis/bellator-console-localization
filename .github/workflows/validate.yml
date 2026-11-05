@@ -1,0 +1,29 @@
+name: Validate localization
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  validate:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build English payloads
+        run: python src/build_english.py
+      - name: Build installer ZIP
+        run: python src/package.py
+      - name: Verify payloads
+        run: python -m unittest discover -s tests -p "test_*.py" -v
+      - name: Test installer with dummy files
+        if: runner.os == 'Windows'
+        shell: powershell
+        run: ./tests/test-installer.ps1
+      - name: Check reproducible artifacts
+        run: git diff --exit-code -- package docs/build-report.json dist
