@@ -6,8 +6,8 @@ from managed import Managed,resource_read,baml_read,STRING_TYPES,sread,U32
 class PayloadTests(unittest.TestCase):
  @classmethod
  def setUpClass(cls):
-  cls.manifest=json.loads((ROOT/'package/manifest.json').read_text())
-  cls.mapping=json.loads((ROOT/'locales/en.json').read_text())
+  cls.manifest=json.loads((ROOT/'package/manifest.json').read_text(encoding='utf-8'))
+  cls.mapping=json.loads((ROOT/'locales/en.json').read_text(encoding='utf-8'))
  def test_checksums(self):
   for row in self.manifest['files']:
    for lang in ['ru','en']:

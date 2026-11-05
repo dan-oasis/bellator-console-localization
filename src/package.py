@@ -11,21 +11,21 @@ def main():
   row={'relative':relative,'original':original,'previous':previous}
   for lang in ['ru','en']:row[lang]=digest(ROOT/'package/payload'/lang/relative)
   files.append(row)
- (ROOT/'package/manifest.json').write_text(json.dumps({'version':'1.1.5-localization.6','files':files},ensure_ascii=False,indent=2)+'\n',newline='\n')
+ (ROOT/'package/manifest.json').write_text(json.dumps({'version':'1.1.5-localization.6','files':files},ensure_ascii=False,indent=2)+'\n',encoding='utf-8',newline='\n')
  ps=ROOT/'package/Install.ps1';text=ps.read_text(encoding='utf-8-sig');ps.write_text(text,encoding='utf-8-sig',newline='\n')
  for action in ['Install','Restore']:
   cmd=f'@echo off\r\npowershell.exe -NoProfile -STA -ExecutionPolicy Bypass -File "%~dp0Install.ps1" -Action {action}\r\nset "result=%ERRORLEVEL%"\r\necho.\r\npause\r\nexit /b %result%\r\n'
   (ROOT/'package'/f'{action}.cmd').write_bytes(cmd.encode('ascii'))
  for name in ['README.md','README.ru.md']:(ROOT/'package'/name).write_bytes((ROOT/name).read_bytes())
- sums=''.join(digest(p)+'  '+p.relative_to(ROOT/'package').as_posix()+'\n' for p in sorted((ROOT/'package').rglob('*')) if p.is_file() and p.name!='SHA256SUMS')
- (ROOT/'package/SHA256SUMS').write_text(sums,newline='\n')
+ sums=''.join(digest(p)+'  '+p.relative_to(ROOT/'package').as_posix()+'\n' for p in sorted((ROOT/'package').rglob('*'),key=lambda p:p.relative_to(ROOT/'package').as_posix()) if p.is_file() and p.name!='SHA256SUMS')
+ (ROOT/'package/SHA256SUMS').write_text(sums,encoding='utf-8',newline='\n')
  (ROOT/'dist').mkdir(exist_ok=True)
  archive=ROOT/'dist/BellatorConsole_1.1.5_RU_EN.zip'
  with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED,compresslevel=9) as z:
-  for p in sorted((ROOT/'package').rglob('*')):
+  for p in sorted((ROOT/'package').rglob('*'),key=lambda p:p.relative_to(ROOT/'package').as_posix()):
    if p.is_file():
     info=zipfile.ZipInfo('BellatorConsole_1.1.5_RU_EN/'+p.relative_to(ROOT/'package').as_posix(),date_time=(2026,1,1,0,0,0));info.create_system=3;info.compress_type=zipfile.ZIP_DEFLATED;info.external_attr=0o100644<<16;z.writestr(info,p.read_bytes(),compresslevel=9)
  with zipfile.ZipFile(archive) as z:assert z.testzip() is None
- (ROOT/'dist/SHA256SUMS').write_text(digest(archive)+'  '+archive.name+'\n',newline='\n')
+ (ROOT/'dist/SHA256SUMS').write_text(digest(archive)+'  '+archive.name+'\n',encoding='utf-8',newline='\n')
  print(archive.name,archive.stat().st_size,'bytes',digest(archive))
 if __name__=='__main__':main()
