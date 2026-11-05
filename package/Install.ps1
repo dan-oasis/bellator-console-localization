@@ -75,7 +75,7 @@ try {
         if ($d.relative -notin @('斗战者控制台.dll','ApplyIcc/ApplyIcc.exe')) { throw 'Invalid manifest target.' }
         $relative = $d.relative.Replace('/', [System.IO.Path]::DirectorySeparatorChar)
         $target = Join-Path $Folder $relative
-        # Preserve compatibility with backups created by earlier RU installers.
+        # Original backups use the .before-russian suffix for both languages.
         $backup = $target + '.before-russian'
         if (-not (Test-Path -LiteralPath $target -PathType Leaf)) {
             throw ((T 'Файл не найден: ' 'File not found: ') + $relative)

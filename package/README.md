@@ -1,57 +1,52 @@
 # Bellator Console 1.1.5 — Russian / English
 
-Community localization for **Bellator Console 1.1.5** (`斗战者控制台`). Includes the main console and the **ApplyIcc color-calibration window**.
+Russian and English localization for **Bellator Console 1.1.5** (`斗战者控制台`), including the **ApplyIcc** color-calibration utility.
 
-[**Download the RU / EN installer package**](dist/BellatorConsole_1.1.5_RU_EN.zip?raw=true) · [Русская инструкция](README.ru.md) · [SHA-256](dist/SHA256SUMS)
+[Download RU / EN](https://github.com/dan-oasis/bellator-console-localization/raw/refs/heads/main/dist/BellatorConsole_1.1.5_RU_EN.zip) · [Русская инструкция](README.ru.md) · [SHA-256](https://github.com/dan-oasis/bellator-console-localization/blob/main/dist/SHA256SUMS)
 
-## Install or change language
+## Features
 
-1. Install the original manufacturer application first. This repository contains a localization patch, not the complete application or hardware drivers.
-2. Download the ZIP above and **extract all files into a new folder**.
-3. Exit Bellator Console, including its tray icon, and close ApplyIcc if it is open.
-4. Right-click **Install.cmd → Run as administrator**.
-5. Choose **Русский** or **English** in the language window.
-6. Select the original application's main installation folder containing `斗战者控制台.exe`, then start it with its usual shortcut after installation completes.
+- Translated dashboard, settings, performance modes, fan controls, lighting, dialogs and export labels.
+- Translated color-calibration interface and messages.
+- Russian or English selection during installation.
+- Language switching, original-file backups and restoration.
+- SHA-256 verification of payloads, installed files and backups.
 
-To switch languages later, run **Install.cmd** again and select the other language. A prior Russian revision 1–5 can be upgraded if its original backups still exist.
+## Requirements
 
-To restore the manufacturer files, close both applications and run **Restore.cmd** as administrator. The language choice then controls installer messages; restoration always restores both original files.
+Windows, PowerShell 5.1 or later, administrator privileges and the original Bellator Console 1.1.5 installation. The package contains localization files only; it does not include the original application installer or hardware drivers. Unknown application builds are rejected.
 
-PowerShell 5.1 or later on Windows is required. For unattended use with a known path:
+## Installation
 
-```powershell
-powershell.exe -NoProfile -STA -ExecutionPolicy Bypass -File .\Install.ps1 -Action Install -Language en -Folder 'C:\Path\To\Bellator Console'
-```
+1. Extract the entire ZIP into a folder.
+2. Exit Bellator Console, including its tray icon, and close ApplyIcc.
+3. Right-click **Install.cmd → Run as administrator**.
+4. Choose **Русский** or **English**.
+5. Select the application folder containing `斗战者控制台.exe`.
+6. Start Bellator Console using its normal shortcut.
 
-Use `-Language ru` for Russian or `-Action Restore` to restore the original files. The CMD launchers do not change the machine-wide PowerShell execution policy.
+Run **Install.cmd** again to select another language. Original backups are required for language switching.
 
-## Files and backups
+## Restoration
 
-Only these two files are replaced:
+Close both applications and run **Restore.cmd** as administrator. Both original files are restored. The language selection controls the installer messages.
 
-| Target | Purpose | Original backup |
-| --- | --- | --- |
-| `斗战者控制台.dll` | Main interface | `斗战者控制台.dll.before-russian` |
-| `ApplyIcc/ApplyIcc.exe` | Color-calibration interface | `ApplyIcc/ApplyIcc.exe.before-russian` |
+| Target | Backup |
+| --- | --- |
+| `斗战者控制台.dll` | `斗战者控制台.dll.before-russian` |
+| `ApplyIcc/ApplyIcc.exe` | `ApplyIcc/ApplyIcc.exe.before-russian` |
 
-The historical `.before-russian` suffix is retained for compatibility, including English installations. **Keep these backups.** Their SHA-256 hashes are checked before a language change or restoration. Unknown builds are rejected before either target is changed. Both payloads and backups are prepared before replacement; if a later replacement fails, the script attempts to restore the exact state before that attempt.
+Keep the backups. The `.before-russian` suffix is used for both languages. Backups and both target files are verified before replacement. If a replacement fails, the installer attempts to restore the state before that installation attempt.
 
-The main EXE, drivers, services, ICC profiles and application settings are not part of this patch. Original manufacturer binaries and the original setup program are not redistributed here. Only translated application payloads are included. Manufacturer signatures cannot be retained on the modified payloads.
+## Scope
 
-## Scope and verification
+The package replaces the two files listed above. The main EXE, drivers, services, ICC profiles and application settings are not replaced. Manufacturer signatures are not retained on localized files. Some technical diagnostics and OS control names remain in their original language.
 
-- Main dashboard, performance modes, graphics switches, keyboard settings, fan controls, confirmation dialogs, color picker, export labels and calibration messages.
-- The main dashboard preserves the requested compact **Ghz**, **°C**, **CPU's**, **CPU/GPU**, and **system** labels. The CPU count remains dynamic and is centered inside the existing frame.
-- English is built from the supplied Russian revision 5. The Russian payload is preserved byte-for-byte.
-- English builds are structurally checked: PE bounds, .NET metadata, BAML records, deferred dictionary offsets, all `ldstr` references, and **472 method bodies**. Only string operands are allowed to differ inside method bodies.
-- Exact OS window/control lookup strings used by ApplyIcc are preserved. This localization does not change the OEM calibration procedure or hardware support.
-- Some technical OEM diagnostics and OS control names may remain in their original language. The unused original strings also remain embedded in metadata; this does not mean they are displayed.
-
-**The new English UI and installer must still be checked on the target Windows laptop.** Static checks and installer fixture tests do not verify actual GPU switching, fan behavior or color calibration. Earlier Russian revisions were visually reviewed using user-provided screenshots; this is not an OEM release.
+Automated checks cover binary structure, string references, **472 method bodies**, installation, language switching and restoration. Checks run on Windows and Linux. These tests do not validate GPU switching, fan behavior, color-calibration results or display layout on specific laptop models.
 
 ## Build and test
 
-Python 3.10+ with no third-party packages:
+Python 3.10+; no third-party Python packages are required. Run from the repository root:
 
 ```sh
 python src/build_english.py
@@ -59,18 +54,22 @@ python src/package.py
 python -m unittest discover -s tests -p 'test_*.py' -v
 ```
 
-The supplied Russian payload hashes are pinned by `src/build_english.py`. The English dictionary is in `locales/en.json`. Packaging produces a reproducible ZIP and SHA-256 lists.
-
-On Windows, also run:
+Windows installer tests:
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File tests\test-installer.ps1
 ```
 
-That test uses temporary **dummy files** and does not modify or launch the installed Bellator application. It exercises EN installation, switching to RU, reinstallation, restoration, unknown-build rejection and rollback after a locked second file.
+The installer tests use temporary dummy files and do not launch the application. The translation dictionary is `locales/en.json`; binary verification results are in `docs/build-report.json`.
 
-See [build-report.json](docs/build-report.json) for the binary verification counts.
+Command-line installation:
+
+```powershell
+powershell.exe -NoProfile -STA -ExecutionPolicy Bypass -File .\Install.ps1 -Action Install -Language en -Folder 'C:\Path\To\Bellator Console'
+```
+
+Use `-Language ru` for Russian or `-Action Restore` to restore the original files. The CMD launchers do not change the machine-wide PowerShell execution policy.
 
 ## Ownership
 
-This is an unofficial localization project. The underlying application and third-party components remain the property of their respective owners. No license or ownership of the manufacturer application is asserted by this repository.
+Unofficial localization. The underlying application and third-party components belong to their respective owners.

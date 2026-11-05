@@ -1,4 +1,4 @@
-"""Build English payloads from the supplied Russian revision 5 payloads."""
+"""Build English application payloads from Russian localization files."""
 from pathlib import Path
 import hashlib,json
 from managed import Managed
