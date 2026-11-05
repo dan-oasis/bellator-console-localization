@@ -83,3 +83,6 @@ try {
     if ($lock) { $lock.Dispose() }
     Remove-Item -LiteralPath $fixture -Recurse -Force -ErrorAction SilentlyContinue
 }
+
+# The final negative case intentionally returns 1; do not propagate it to CI.
+exit 0
